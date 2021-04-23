@@ -18,6 +18,7 @@ class Form{
             player.name = this.input.value();
             playerCount++;
             player.index = playerCount;
+            player.rank = 0;
             player.update();
             player.updateCount(playerCount);
             this.greeting.html('Welcome '+player.name);
@@ -27,6 +28,10 @@ class Form{
         this.reset.mousePressed(()=>{
             player.updateCount(0);
             game.updateState(0);
+            Player.updateCarsAtEnd(0);
+            database.ref("/").update({
+                Players : null
+            });
         })
     }
     hideForm(){

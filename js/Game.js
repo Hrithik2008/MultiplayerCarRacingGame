@@ -18,25 +18,29 @@ class Game {
       form.display();
       player.getCount();
       car1 = createSprite(100, 200, 20, 20);
-      car1.addImage("car1",car1_img);
+      car1.addImage("car1", car1_img);
       car2 = createSprite(300, 200, 20, 20);
-      car2.addImage("car2",car2_img);
+      car2.addImage("car2", car2_img);
       car3 = createSprite(500, 200, 20, 20);
-      car3.addImage("car3",car3_img);
+      car3.addImage("car3", car3_img);
       car4 = createSprite(700, 200, 20, 20);
-      car4.addImage("car4",car4_img);
+      car4.addImage("car4", car4_img);
       cars = [car1, car2, car3, car4];
     }
   }
   play() {
+    Player.getPlayerInfo();
+    player.getCarsAtEnd();
+  
     background(ground_img);
     form.hideForm();
+    
     textSize(30);
     text("Game Start", width / 2, height / 2);
-    Player.getPlayerInfo();
+    
     if (allPlayers !== undefined) {
       //var display_position = 130;
-      image(track_img,0,-displayHeight*4,displayWidth,displayHeight*5);
+      image(track_img, 0, -displayHeight * 4, displayWidth, displayHeight * 5);
       var x = 200;
       var y;
       var index = 0;
@@ -47,12 +51,13 @@ class Game {
         y = displayHeight - allPlayers[i].distance;
         cars[index - 1].x = x;
         cars[index - 1].y = y;
+        
         if (index === player.index) {
-          camera.position.x = displayWidth/2;
-          camera.position.y = cars[index-1].y;
+          camera.position.x = displayWidth / 2;
+          camera.position.y = cars[index - 1].y;
           cars[index - 1].shapeColor = "red";
-          fill(255,0,0);
-         ellipse(x,y,75,75);
+          fill(255, 0, 0);
+          ellipse(x, y, 75, 75);
         }
 
         //display_position+= 20;
@@ -64,16 +69,25 @@ class Game {
       player.distance += 50;
       player.update();
     }
-    if(player.distance > 3860){
+    if (player.distance > 3860) {
       gameState = 2;
+      //console.log(indexx);
+      //indexx++;
+      //player.updateRank(indexx);
+      player.rank++;
+      Player.updateCarsAtEnd(player.rank);
     }
+
     drawSprites();
   }
-  end(){
+  end() {
+    background(0);
     console.log("Game has ended ");
     textSize(20);
+    fill(255);
     //textAlign(CENTER);
-    text("Game has ended",displayWidth/2,displayHeight/2);
+    //text("Game has ended",camera.position.x,camera.position.y);
+    //text(`Your rank is ${player.rank}`,camera.position.x,camera.position.y-50);
+    console.log(player.name, player.rank);
   }
 }
-
