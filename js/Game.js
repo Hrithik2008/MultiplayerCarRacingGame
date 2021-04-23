@@ -75,19 +75,23 @@ class Game {
       //indexx++;
       //player.updateRank(indexx);
       player.rank++;
+      player.updateRank(player.rank);
       Player.updateCarsAtEnd(player.rank);
     }
 
     drawSprites();
   }
   end() {
+    var position = camera.position.y + 50;
     background(0);
     console.log("Game has ended ");
     textSize(20);
     fill(255);
-    //textAlign(CENTER);
-    //text("Game has ended",camera.position.x,camera.position.y);
-    //text(`Your rank is ${player.rank}`,camera.position.x,camera.position.y-50);
-    console.log(player.name, player.rank);
+    for(var j in allPlayers){
+      textAlign(CENTER);
+      text("Game has ended",camera.position.x,camera.position.y);
+      text(`${allPlayers[j].name}'s rank is ${allPlayers[j].rank}`,camera.position.x,position);
+      position+=50;
+    }
   }
 }

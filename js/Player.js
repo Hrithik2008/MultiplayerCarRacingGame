@@ -21,12 +21,19 @@ class Player {
     var playerIndex = "Players/Player" + this.index;
     database.ref(playerIndex).set({
       name: this.name,
-      distance: this.distance
+      distance: this.distance,
+      rank : this.rank
     });
   }
   getCarsAtEnd(){
     database.ref("CarsAtEnd").on("value",(data)=>{
         this.rank = data.val();
+    });
+  }
+  updateRank(score){
+    var PlayerRef = "Players/Player"+this.index;
+    database.ref(PlayerRef).update({
+        rank : score
     });
   }
   static updateCarsAtEnd(rank){
